@@ -19,38 +19,48 @@ public class BioinformaticMatrix {
 		System.out.print("Enter the gene you would like to compare: ");
 		String gene = scan.nextLine();
 		String[] geneW = gene.split("");
-		System.out.println(calculateBestScore(input,gene,geneW[0]));
-		System.out.println(calculateBestScore(input,gene,geneW[1]));
-		System.out.println(calculateBestScore(input,gene,geneW[2]));
-		System.out.println(calculateBestScore(input,gene,geneW[3]));
+		System.out.println(calculateBestScore(input,gene,geneW[0],0));
+		System.out.println(calculateBestScore(input,gene,geneW[1],1));
+		System.out.println(calculateBestScore(input,gene,geneW[2],2));
+		System.out.println(calculateBestScore(input,gene,geneW[3],3));
 	}
 	
-	private static int calculateBestScore(String original, String gene, String geneW)
+	/**
+	 * Method calculateBestScore
+	 * 
+	 * Determines the best score within the matrix with the given gene and sequence
+	 * 
+	 * @param original
+	 * @param gene
+	 * @param geneW
+	 * @param pos
+	 * @return
+	 */
+	private static int calculateBestScore(String original, String gene, String geneW, int pos)
 	{
 		int total = 0;
 		int temp = 0;
 		int loc = 0;
-		int row = dictionary.get(geneW);
+		
+		
 		String[] genex = gene.split("");
+		int row = dictionary.get(genex[0]);
 		int row1 = dictionary.get(genex[1]);
 		int row2 = dictionary.get(genex[2]);
 		int row3 = dictionary.get(genex[3]);
-		System.out.println(row);
+
 		String[] word = original.split("");
 		for(int i = 0; i < word.length - 3; i++)
 		{
 			if(word[i].equals(geneW))
 			{
-				
-				temp += matrix[row][dictionary.get(word[i])];
-				temp += matrix[row1][dictionary.get(word[i + 1])];
-				temp += matrix[row2][dictionary.get(word[i + 2])];
-				temp += matrix[row3][dictionary.get(word[i + 3])];
+				temp += matrix[row][dictionary.get(word[i - pos])];
+				temp += matrix[row1][dictionary.get(word[i - pos + 1])];
+				temp += matrix[row2][dictionary.get(word[i - pos + 2])];
+				temp += matrix[row3][dictionary.get(word[i - pos+ 3])];
 				if(temp > total)
 				{
-					System.out.println("Current Location: " + i);
-					System.out.println("Letter is: "+ word[i] + word[i +1] + word[i +2] + word[i +3]);
-					System.out.println("Current Total: " + temp);
+					System.out.println("Letter is: "+ word[i - pos ] + word[i -pos +1] + word[i -pos + 2] + word[i -pos +3]);
 					total = temp;
 					temp = 0;
 					loc = i;
@@ -58,6 +68,7 @@ public class BioinformaticMatrix {
 				temp = 0;
 			}
 		}
+		System.out.println("Current Location: " + loc);
 		return total;
 	}
 	
