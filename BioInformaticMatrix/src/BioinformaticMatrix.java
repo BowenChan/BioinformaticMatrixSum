@@ -23,7 +23,7 @@ public class BioinformaticMatrix {
 		dictionary = createMap(ARRAY_WORD);
 		blosumMatrix = createArray(ARRAY_NUMBER);
 		Scanner scan = new Scanner(System.in);
-		createSmithWater("Hello", "Hello");
+		createSmithWater("ACACACTA", "AGCACACA");
 		//Setting the Gap Penalty
 
 		
@@ -146,11 +146,19 @@ public class BioinformaticMatrix {
 		return res;
 	}
 	
+	/**
+	 * Method Create Smith Watersman Array
+	 * 
+	 * @param seq1
+	 * @param seq2
+	 * @return
+	 */
 	private static int[][] createSmithWater(String seq1, String seq2){
 
+		
 		//adding dash for the initial table
-		seq1 = "-" + seq1;
-		seq2 = "-" + seq2;
+		seq1 = "-" + seq1.toUpperCase();
+		seq2 = "-" + seq2.toUpperCase();
 
 		//updating length to accommodate the empty top left corner
 		row = seq2.length() + 1;
@@ -201,6 +209,13 @@ public class BioinformaticMatrix {
 		return null;
 	}
 	
+	/**
+	 * Method Check Score
+	 * 
+	 * @param rowLoc
+	 * @param columnLoc
+	 * @return
+	 */
 	private static int checkScore(int rowLoc, int columnLoc){
 		int max = 0;
 		int change;
@@ -214,19 +229,29 @@ public class BioinformaticMatrix {
 			change = MISMATCH;
 		}
 		
-		max = Math.max(max, Math.max(Integer.parseInt(smithWatersman[rowLoc - 1][columnLoc]) + change,
+		max = Math.max(max, Math.max(Integer.parseInt(smithWatersman[rowLoc - 1][columnLoc]) -1,
 						Math.max(Integer.parseInt(smithWatersman[rowLoc-1][columnLoc-1])+ change, 
-								Integer.parseInt(smithWatersman[rowLoc][columnLoc-1])+change)));
+								Integer.parseInt(smithWatersman[rowLoc][columnLoc-1])-1)));
 		
 		return max;
 	}
 	
+	/**
+	 * Method Check Match
+	 * 
+	 * @param rowLoc
+	 * @param columnLoc
+	 * @return
+	 */
 	private static boolean match(int rowLoc, int columnLoc)
 	{
 		
 		return smithWatersman[rowLoc][0].equals(smithWatersman[0][columnLoc]);
 	}
 	
+	/**
+	 * Method Print Array
+	 */
 	private static void printSmithWaterman(){
 		for(int i = 0; i < row;i++)
 		{
@@ -240,5 +265,10 @@ public class BioinformaticMatrix {
 			
 			System.out.println();
 		}
+	}
+
+	
+	private static void determineBestScore(){
+		
 	}
 }
