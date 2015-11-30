@@ -6,13 +6,14 @@ public class BioinformaticMatrix {
 	private static final String ARRAY_WORD = "A R N D C Q E G H I L K M F P S T W Y V B Z X *";
 	private static final String ARRAY_NUMBER = "4 -1 -2 -2 0 -1 -1 0 -2 -1 -1 -1 -1 -2 -1 1 0 -3 -2 0 -2 -1 0 -4 -1 5 0 -2 -3 1 0 -2 0 -3 -2 2 -1 -3 -2 -1 -1 -3 -2 -3 -1 0 -1 -4 -2 0 6 1 -3 0 0 0 1 -3 -3 0 -2 -3 -2 1 0 -4 -2 -3 3 0 -1 -4 -2 -2 1 6 -3 0 2 -1 -1 -3 -4 -1 -3 -3 -1 0 -1 -4 -3 -3 4 1 -1 -4 0 -3 -3 -3 9 -3 -4 -3 -3 -1 -1 -3 -1 -2 -3 -1 -1 -2 -2 -1 -3 -3 -2 -4 -1 1 0 0 -3 5 2 -2 0 -3 -2 1 0 -3 -1 0 -1 -2 -1 -2 0 3 -1 -4 -1 0 0 2 -4 2 5 -2 0 -3 -3 1 -2 -3 -1 0 -1 -3 -2 -2 1 4 -1 -4 0 -2 0 -1 -3 -2 -2 6 -2 -4 -4 -2 -3 -3 -2 0 -2 -2 -3 -3 -1 -2 -1 -4 -2 0 1 -1 -3 0 0 -2 8 -3 -3 -1 -2 -1 -2 -1 -2 -2 2 -3 0 0 -1 -4 -1 -3 -3 -3 -1 -3 -3 -4 -3 4 2 -3 1 0 -3 -2 -1 -3 -1 3 -3 -3 -1 -4 -1 -2 -3 -4 -1 -2 -3 -4 -3 2 4 -2 2 0 -3 -2 -1 -2 -1 1 -4 -3 -1 -4 -1 2 0 -1 -3 1 1 -2 -1 -3 -2 5 -1 -3 -1 0 -1 -3 -2 -2 0 1 -1 -4 -1 -1 -2 -3 -1 0 -2 -3 -2 1 2 -1 5 0 -2 -1 -1 -1 -1 1 -3 -1 -1 -4 -2 -3 -3 -3 -2 -3 -3 -3 -1 0 0 -3 0 6 -4 -2 -2 1 3 -1 -3 -3 -1 -4 -1 -2 -2 -1 -3 -1 -1 -2 -2 -3 -3 -1 -2 -4 7 -1 -1 -4 -3 -2 -2 -1 -2 -4 1 -1 1 0 -1 0 0 0 -1 -2 -2 0 -1 -2 -1 4 1 -3 -2 -2 0 0 0 -4 0 -1 0 -1 -1 -1 -1 -2 -2 -1 -1 -1 -1 -2 -1 1 5 -2 -2 0 -1 -1 0 -4 -3 -3 -4 -4 -2 -2 -3 -2 -2 -3 -2 -3 -1 1 -4 -3 -2 11 2 -3 -4 -3 -2 -4 -2 -2 -2 -3 -2 -1 -2 -3 2 -1 -1 -2 -1 3 -3 -2 -2 2 7 -1 -3 -2 -1 -4 0 -3 -3 -3 -1 -2 -2 -3 -3 3 1 -2 1 -1 -2 -2 0 -3 -1 4 -3 -2 -1 -4 -2 -1 3 4 -3 0 1 -1 0 -3 -4 0 -3 -3 -2 0 -1 -4 -3 -3 4 1 -1 -4 -1 0 0 1 -3 3 4 -2 0 -3 -3 1 -1 -3 -1 0 -1 -3 -2 -2 1 4 -1 -4 0 -1 -1 -1 -2 -1 -1 -1 -1 -1 -1 -1 -1 -1 -2 0 0 -2 -1 -1 -1 -1 -1 -4 -4 -4 -4 -4 -4 -4 -4 -4 -4 -4 -4 -4 -4 -4 -4 -4 -4 -4 -4 -4 -4 -4 -4 1 ";
 	public static Map<String, Integer> dictionary;
-	public static int[][] matrix;
+	public static int[][] blosumMatrix;
+	public static int[][] smithWatersman;
 	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		//create the foundational array and map
 		dictionary = createMap(ARRAY_WORD);
-		matrix = createArray(ARRAY_NUMBER);
+		blosumMatrix = createArray(ARRAY_NUMBER);
 			
 		//obtain the user's string sequence
 		Scanner scan = new Scanner(System.in);
@@ -60,13 +61,13 @@ public class BioinformaticMatrix {
 			int temp = 0;
 			//find when the letter is equal to itself in the string to determine its
 			//biggest sum
-			if(word[i].equals(geneW))
+			if(word[i].equals(geneW) && (i - pos) < 0)
 			{
 				//determine the sum of the word
-				temp += matrix[row][dictionary.get(word[i - pos])];
-				temp += matrix[row1][dictionary.get(word[i - pos + 1])];
-				temp += matrix[row2][dictionary.get(word[i - pos + 2])];
-				temp += matrix[row3][dictionary.get(word[i - pos+ 3])];
+				temp += blosumMatrix[row][dictionary.get(word[i - pos])];
+				temp += blosumMatrix[row1][dictionary.get(word[i - pos + 1])];
+				temp += blosumMatrix[row2][dictionary.get(word[i - pos + 2])];
+				temp += blosumMatrix[row3][dictionary.get(word[i - pos+ 3])];
 				//find the maximum number
 				if(temp > total)
 				{
@@ -128,5 +129,19 @@ public class BioinformaticMatrix {
 		
 		
 		return res;
+	}
+	
+	private static int[][] createSmithWater(String seq1, String seq2){
+		
+		//initialize the first row and column
+		for(int row = 0;row < seq2.length();row++)
+		{
+			smithWatersman[row][0] = 0;
+		}
+		for(int column = 0; column < seq1.length(); column++)
+		{
+			smithWatersman[0][column] = 0;
+		}
+		return null;
 	}
 }
