@@ -56,7 +56,35 @@ public class BioinformaticMatrix {
 		printSmithWaterman();
 		determineBestScore();
 		
-		
+		System.out.println();
+		System.out.println();
+		String genome = "a";
+		//accepts all user input until they would liek to leave.
+		while(genome.charAt(0) != 'q'){
+			//ask for the genome sequences and referenecs strand
+			System.out.println("Enter the Genome you would like have (or q to quit):" );
+			genome = scan.nextLine();
+			if(genome.charAt(0) != 'q'){
+				System.out.println("Enter the reference strand you would like to use: ");
+				String ref = scan.nextLine();
+				//ask for personal scores
+				System.out.println("Enter the match you would like:");
+				MATCH = scan.nextInt();
+				System.out.println("Enter the misMatch you would like: ");
+				MISMATCH = scan.nextInt();
+				System.out.println("Enter the constant gap penalty you would like to use: ");
+				GAP = scan.nextInt();
+				
+				System.out.println("Testing with "+genome+" and "+ref+": Match = "
+						+ MATCH+", MisMatch = "+MISMATCH+" Gap Penalty set to "+GAP+" constant");
+				
+				//create the smith watersman
+				createSmithWater(genome, ref);
+				printSmithWaterman();
+				determineBestScore();
+			}
+		}
+		System.out.println("Thank you");
 		
 		/*
 		//obtain the user's string sequence
